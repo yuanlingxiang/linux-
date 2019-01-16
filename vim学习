@@ -6,19 +6,21 @@ x 删除当前光标所在处的字符
 输入模式下按键：
 ENTER，回车键，换行
 BACK SPACE，退格键，删除光标前一个字符
-HOME/END，移动光标到行首/行尾
-Page Up/Page Down，上/下翻页
 ESC，退出输入模式，切换到命令模式
+
+命令模式：
 G，移动到这个档案的最后一行
 gg，移动到这个档案的第一行
+HOME/END，移动光标到行首/行尾
+Page Up/Page Down，上/下翻页
 
 搜索
-/word或者?word，文档中搜索所有的word字符串，按下n跳转到下一个匹配，N跳转到上一个匹配
+/word，文档中搜索所有的word字符串，按下n跳转到下一个匹配，N跳转到上一个匹配
 
 替换：
 :n1,n2s/word1/word2/g：在n1到n2行之间搜索word1，并将word1替换成word2
-:1,$s/word1/word2/g：从第1行到最后一行之间搜索word1，并将word1替换成word2
-:1,$s/word1/word2/gc：从第1行到最后一行之间搜索word1，并将word1替换成word2，提示用户是否确认替换
+:%s/word1/word2/g：从第1行到最后一行之间搜索word1，并将word1替换成word2
+:%s/word1/word2/gc：从第1行到最后一行之间搜索word1，并将word1替换成word2，提示用户是否确认替换
 
 删除:
 x:向前删除字符
@@ -55,7 +57,6 @@ vi/vim 共分为三种模式:
 命令模式：
 
 vi 文件名：进入vim的命令模式，即使新建或打开文件
-按下i/a/o进入编辑模式
 按下esc进入一般模式
 
 详情参考：
