@@ -1,0 +1,12 @@
+cat 命令用于连接文件并打印到标准输出设备上
+
+用法1：
+把 textfile1 的文档内容加上行号后输入 textfile2 这个文档里
+cat -n textfile1 > textfile2
+
+用法2：
+把 textfile1 和 textfile2 的文档内容加上行号（空白行不加）之后将内容附加到 textfile3 文档里：
+cat -b textfile1 textfile2 >> textfile3
+
+清空 /etc/test.txt 文档内容：
+cat /dev/null > /etc/test.txt

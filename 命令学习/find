@@ -1,0 +1,8 @@
+#查找系统中文件名为aa.xml的文件
+find / -name aa.xml
+
+#查找系统中文件名为aa.xml的文件， 不区分大小写
+find / -iname aa.xml
+
+#查找系统中后缀名为.xml的文件
+find / -name "*.xml"

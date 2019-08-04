@@ -1,3 +1,4 @@
+#文本如下：
 2 this is a test
 3 Are you like awk
 This's a test
@@ -12,9 +13,12 @@ akw '{print $1, $4}' log.txt
 awk '{printf "%-8s %-10s\n", $1, $4}' log.txt
 
 用法二：指定分割字符
-
 以逗号进行分割
 awk -F, '{print $1,$2}'   log.txt
 # 使用多个分隔符.先使用空格分割，然后对分割结果再使用","分割
 awk -F '[ ,]'  '{print $1,$2,$5}'   log.txt
+
+
+用法三：设置变量
+awk -va=1 '{print $1, $2+a}' log.txt
 

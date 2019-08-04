@@ -1,0 +1,18 @@
+tail 命令可用于查看文件的内容
+tail -f filename 会把 filename 文件里的最尾部的内容显示在屏幕上，并且不断刷新，只要 filename 更新就可以看到最新的文件内容
+
+用法1：
+显示文件的最后10行
+tail notes.log
+
+用法2：
+要跟踪名为 notes.log 的文件的增长情况
+tail -f notes.log
+
+用法3：
+显示文件 notes.log 的内容，从第 20 行至文件末尾
+tail +20 notes.log
+
+用法4：
+显示文件 notes.log 的最后 10 个字符:
+tail -c 10 notes.log

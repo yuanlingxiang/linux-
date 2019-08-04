@@ -1,0 +1,28 @@
+scp命令用于Linux之间复制文件和目录
+
+用法1：复制文件
+从本地复制到远程
+#复制到远程目录，文件名不变
+scp local_file remote_usr@remote_ip:remote_folder
+
+#复制到远程目录，文件名被修改
+scp local_file remote_usr@remote_ip:remote_file
+
+用法2：复制目录
+scp -r local_folder remote_username@remote_ip:remote_folder
+
+
+用法3：
+从远程复制到本地
+复制文件
+scp root@www.runoob.com:/home/root/others/music /home/space/music/1.mp3
+复制目录
+scp -r root@www.runoob.com:/home/root/others/ /home/space/music/
+
+
+用法4：
+如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号，命令格式如下
+scp -P 4588 remote@www.runoob.com:/usr/local/sin.sh /home/administrator（4588为端口号）
+
+
+
