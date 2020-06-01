@@ -1,0 +1,19 @@
+1，如果ifconfig看不到IP4地址，输入如下命令：
+dhclient（获取IP地址）
+ip addr（查看IP地址）
+2， 直接使用ifconfig进行查看
+3， 配置静态IP
+    a)输入命令：vi /etc/sysconfig/network-scripts/ifcfg-网口名
+样例：
+DEVICE=eth0
+HWADDR=00:0C:29:B1:BD:78
+TYPE=Ethernet
+UUID=346b527d-6ba0-4549-b683-531d10d3e801
+ONBOOT=yes（由no修改为yes）
+NM_CONTROLLED=yes
+BOOTPROTO=static（又dhcp修改为static）
+IPADDR=192.168.1.90
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+
+
