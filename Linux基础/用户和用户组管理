@@ -1,0 +1,162 @@
+用户管理
+1， 添加用户
+语法：
+useradd 选项 用户名
+-c comment 指定一段注释性描述。
+-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。
+-g 指定用户所属的用户组。
+-G 指定用户所属的附加组。
+-s 指定用户的登录Shell。
+-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。
+举例1:
+# useradd –d  /home/sam -m sam
+创建一个用户sam，
+用户的主目录为：/home/sam
+其中-d和-m选项用来为登录名sam产生一个主目录:/home/sam
+
+举例2：
+# useradd -s /bin/sh -g group –G adm,root gem
+新建用户gem
+该用户的登录shell是:/bin/sh
+属于group用户组，同时又属于adm和root用户组，其中group用户组是其主组
+
+2， 删除帐号
+语法：
+userdel 选项 用户名
+-r ：删除账号的同时，删除账号目录
+举例1：
+userdel -r sam
+删除用户arm，并删除主目录
+
+3， 修改帐号
+语法：
+usermod 选项 用户名
+常用的选项包括-c, -d, -m, -g, -G, -s, -u，这些选项的意义与useradd命令中的选项一样
+举例1：
+usermod -s /bin/ksh -d /home/z -g developer sam
+-s /bin/ksh：修改用户的shell登录方式
+-d /home/z：修改用户的目录
+-g developer：修改用户的用户组
+
+4，用户口令的管理
+语法：
+passwd 选项 用户名
+-l 锁定口令，即禁用账号。
+-u 口令解锁。
+-d 使账号无口令。
+-f 强迫用户下次登录时修改口令。
+如果默认用户名，则修改当前用户的口令
+举例1：
+passwd sam
+修改用户sam的密码
+passwd -d sam
+用户指定空口令，空口令用户不能登录
+passwd -l sam
+锁定用户，该用户不能登录
+passwd -u sam
+口令解锁
+
+用户组的管理
+1，添加用户组
+语法：
+groupadd 选项 用户组
+-g 指定新用户组的组标识号（GID）
+
+举例1：
+groupadd group1
+创建用户组group1
+groupadd -g 101 group2
+创建用户组group2，标识号为101
+
+2， 删除用户组
+groupdel 用户组
+举例1：
+groupdel group1
+删除用户组group1
+
+3， 修改用户组
+语法：
+groupmod 选项 用户组
+-g 用户组指定新的组标识号。
+-n 新用户组 将用户组的名字改为新名字
+举例1：
+groupmod -g 102 group2
+修改用户组group2的标识号为102
+groupmod –g 10000 -n group3 group2
+将用户组group2的标识号修改为10000，名称修改为group3
+
+4， 用户切换用户组（切换的组必须是用户所在的组或附加组）
+举例1：
+newgrp root
+
+用户管理文件：
+1， /etc/passwd：记录用户的一些基本属性
+格式：
+用户名:口令:用户标识号:组标识号:注释性描述:主目录:登录Shell
+用户名：代表用户账号的字符串
+口令：系统中，存放着加密后的用户口令字
+用户标识号：是一个整数，系统内部用它来标识用户
+组标识号：用户所属的用户组
+注释性描述：注释
+主目录：用户的起始工作目录
+登录Shell：用户登录后，要启动一个进程，负责将用户的操作传给内核，这个进程是用户登录到系统后运行的命令解释器或某个特定的程序，即Shell
+举例1：
+sam:x:500:504::/home/z:/bin/ksh(口令显示为x， 是因为加密导致)
+
+2， /etc/shadow: 仅超级管理员才有权限
+格式：
+登录名:加密口令:最后一次修改时间:最小时间间隔:最大时间间隔:警告时间:不活动时间:失效时间:标志
+登录名：是与/etc/passwd文件中的登录名相一致的用户账号
+口令：字段存放的是加密后的用户口令字
+最后一次修改时间:表示的是从某个时刻起，到用户最后一次修改口令时的天数。时间起点对不同的系统可能不一样。例如在SCO Linux 中，这个时间起点是1970年1月1日。
+最小时间间隔:指的是两次修改口令之间所需的最小天数。
+最大时间间隔:指的是口令保持有效的最大天数。
+警告时间:字段表示的是从系统开始警告用户到用户密码正式失效之间的天数。
+不活动时间:表示的是用户没有登录活动但账号仍能保持有效的最大天数。
+失效时间：字段给出的是一个绝对的天数，如果使用了这个字段，那么就给出相应账号的生存期。期满后，该账号就不再是一个合法的账号，也就不能再用来登录了
+举例1：
+sam:$6$XVfGPFfJ$3ONAlkFiwOLXhiVm1m5ZNb566X57f5ZWjS7ZCPpsK5hLrFWzTIogb4ZqpHwMyRUFgv.JlFQ2vkB9F95Eex3rK.:18419:0:99999:7:::
+
+3， /etc/group：用户组的所有信息都存放在/etc/group文件中
+格式：
+组名:口令:组标识号:组内用户列表
+组名：是用户组的名称，由字母或数字构成
+口令：字段存放的是用户组加密后的口令字。一般Linux 系统的用户组都没有口令，即这个字段一般为空，或者是*。
+组标识号：与用户标识号类似，也是一个整数，被系统内部用来标识组。
+组内用户列表：是属于这个组的所有用户的列表，不同用户之间用逗号(,)分隔。这个用户组可能是用户的主组，也可能是附加组
+举例1：
+users::20:root,sam
+
+
+添加批量用户
+1， 先编辑一个文本用户文件
+user001::600:100:user:/home/user001:/bin/bash
+user002::601:100:user:/home/user002:/bin/bash
+user003::602:100:user:/home/user003:/bin/bash
+
+以root身份执行命令 /usr/sbin/newusers，从刚创建的用户文件user.txt中导入数据，创建用户：
+cd /usr/sbin
+newusers < user.txt
+
+执行命令/usr/sbin/pwunconv
+pwunconv
+将 /etc/shadow 产生的 shadow 密码解码，然后回写到 /etc/passwd 中，并将/etc/shadow的shadow密码栏删掉。这是为了方便下一步的密码转换工作，即先取消 shadow password 功能。
+
+编辑每个用户的密码对照文件
+用户名:密码
+实例文件 passwd.txt 内容如下：
+user001:123456
+user002:123456
+user003:123456
+user004:123456
+user005:123456
+user006:123456
+
+以 root 身份执行命令 /usr/sbin/chpasswd
+创建用户密码，chpasswd 会将经过 /usr/bin/passwd 命令编码过的密码写入 /etc/passwd 的密码栏
+chpasswd < passwd.txt
+
+确定密码经编码写入/etc/passwd的密码栏后
+执行命令 /usr/sbin/pwconv 将密码编码为 shadow password，并将结果写入 /etc/shadow
+pwconv
+这样就完成了大量用户的创建了，之后您可以到/home下检查这些用户宿主目录的权限设置是否都正确，并登录验证用户密码是否正确
